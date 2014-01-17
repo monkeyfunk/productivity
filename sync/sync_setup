@@ -1,0 +1,8 @@
+#!/bin/bash
+
+echo "export local_root=$local_root"
+echo "export local_svn_root=$local_svn_root"
+echo "export remote_root=$remote_root"
+echo "export remote_host=$remote_host"
+echo "export remote_user=$remote_user"
+echo "export stamp=$stamp"

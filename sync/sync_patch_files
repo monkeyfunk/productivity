@@ -1,0 +1,4 @@
+#!/bin/bash
+
+cat $1 | egrep "^Index:" | cut -c8-
+

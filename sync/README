@@ -1,0 +1,82 @@
+how it works:
+
+here are the commands:
+sync_setup
+sync_updated
+sync_test
+sync_svn
+sync_touch
+
+make sure they are in your path and are executable
+
+here's an example setup file:
+
+export local_root=/Users/achase/Documents/workspace/snap_again
+export local_svn_root=/Users/achase/Documents/tasks/deploy_from_tag/snap_trunk
+export remote_root=/var/adam/snap_trunk
+export remote_host=bos-vs224.p.echonest.net
+export remote_user=achase
+export stamp=/Users/achase/Documents/tasks/deploy_from_tag/snap_stamp
+
+sync_setup dumps the values of those ^^ env variables to stdout
+
+sync_updated dumps the files that were modified since the stamp file was modified to stdout
+
+sync_test file_list dumps scp commands to stdout for the files in question
+
+sync_svn file_list will generate some commands that will diff then copy files into a local svn checkout dir.
+
+sync_touch touches each file in a list
+
+some examples:
+set up env variables
+
+#save them off
+sync_setup > snap_setup
+
+#to use them
+source snap_setup
+
+#make sure this file exists, it's timestamp determines what's modified
+touch $stamp
+
+cd $local_root
+
+#modify some files
+
+sync_updated > snap_updated.txt
+#potentially hand edit snap_updated.txt
+
+sync_test snap_updated.txt > bashme_snap.sh
+bash -f bashme_snap.sh
+
+#to forget updated files
+touch $stamp
+
+#to handle a bunch of files getting touched that you don't want
+sync_updated > save_updated
+svn update
+
+#now there's a lot updated
+touch $stamp
+svn_touch save_updated
+
+#now it's the same set it was
+
+#want to put just those changes into a new svn checkout?
+
+#make sure new checkout is at same rev as source files
+svn co dsflksdfjks snap_trunk
+
+sync_svn snap_updated.txt > bashme_snap_svn.sh
+bash -f bashme_snap_svn.sh
+
+#prompts for copying in files
+#Ctrl-C if something looks bad
+
+#do svn diffs etc and when all looks good, commit
+
+#good luck
+
+
+

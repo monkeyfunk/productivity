@@ -1,0 +1,25 @@
+#!/usr/bin/env python
+
+import sys
+import os
+
+local_root=os.environ["local_root"]
+remote_root=os.environ["remote_root"]
+remote_user=os.environ["remote_user"]
+remote_host=os.environ["remote_host"]
+
+
+
+f = open(sys.argv[1], "r")
+for line in f:
+    local_path = line.strip()
+    if not local_path.startswith(local_root):
+        raise Exception("path needs to be in local_root:"+local_path)
+
+    remote_path=remote_root+local_path[len(local_root):]
+
+    print "scp "+local_path+" "+remote_user+"@"+remote_host+":"+remote_path
+
+
+
+

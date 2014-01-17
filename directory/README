@@ -1,0 +1,13 @@
+To use:
+
+in bashrc:
+source directory.sh
+add aliases (in alias)
+
+cd (adds directories to the history)
+d (shows history)
+go 5 (goes to the fifth directory in the list)
+the size of the history is set to 20 but can be overridden in directory.sh
+
+
+
